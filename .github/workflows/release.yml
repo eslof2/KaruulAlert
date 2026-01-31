@@ -1,0 +1,30 @@
+name: Build KaruulAlert release zip
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  build-release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Build zip (adds top-level KaruulAlert/ folder)
+        run: |
+          VERSION="${GITHUB_REF_NAME#v}"
+          git archive --format=zip --prefix=KaruulAlert/ -o "KaruulAlert-v${VERSION}.zip" "${GITHUB_REF_NAME}"
+          ls -lah
+
+      - name: Create GitHub release + upload zip
+        uses: softprops/action-gh-release@v2
+        with:
+          files: KaruulAlert-v*.zip
+          generate_release_notes: true
