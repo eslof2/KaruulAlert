@@ -10,18 +10,22 @@ end
 kAlert.playerId = kAlert.playerId or nil
 
 local function queueProcessBuffs()
+	if kAlert.config.active then return end
 	kUtils.queueTask(kAlert.processBuffs, kAlert.debug and kAlert.profiling, "processBuffs")
 end
 
 local function queueProcessAbilities()
+	if kAlert.config.active then return end
 	kUtils.queueTask(kAlert.processAbilities, kAlert.debug and kAlert.profiling, "processAbilities")
 end
 
 local function queueProcessResources()
+	if kAlert.config.active then return end
 	kUtils.queueTask(kAlert.processResources, kAlert.debug and kAlert.profiling, "processResources")
 end
 
 local function queueProcessCasting()
+	if kAlert.config.active then return end
 	kUtils.queueTask(kAlert.processCasting, kAlert.debug and kAlert.profiling, "processCasting")
 end
 
@@ -2115,5 +2119,4 @@ end
 
 
 kAlert.main()
-
 
