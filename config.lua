@@ -104,7 +104,11 @@ local function buildLayoutFrame()
 			
 			for i, details in ipairs(kAlert.screenObjects.object) do
 				if details.name ~= nil then
-					details:SetVisible(true)
+					if details.setVisible then
+						details.setVisible(true)
+					else
+						details:SetVisible(true)
+					end
 					if kAlert.config.movers.object[i] == nil then
 						kAlert.config.movers.object[i] = kAlert.config.movers.addObject(i)
 					end
