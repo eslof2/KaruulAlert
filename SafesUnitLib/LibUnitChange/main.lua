@@ -14,17 +14,10 @@ local id = {[false] = {}}
 local current = {}
 local registered = {}
 local lookups = {}
-local refreshes = {}
-
-local function clearRefreshes()
-  for key in pairs(refreshes) do
-    refreshes[key] = nil
-  end
-end
 
 local function process(handle, changes)
   -- figure out what's different
-  clearRefreshes()
+  local refreshes = {}
   for change in pairs(changes) do
     if id[change] then
       for element in pairs(id[change]) do
@@ -41,8 +34,6 @@ local function process(handle, changes)
       id[change] = nil
     end
   end
-
-  if next(refreshes) == nil then return end
   
   -- From here, we need to take every change and link it up to the new things it points to
   local newresults = Inspect.Unit.Lookup(refreshes)
